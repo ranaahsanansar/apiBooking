@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes.js'
 const app = express()
 const port = process.env.PORT 
 const DATABASE_URL = process.env.DATABASE_URL
+// mongodb+srv://ahsan:university786@cluster0.mfukdzl.mongodb.net/?retryWrites=true&w=majority
 
 // CORS Policy
 app.use(cors())
