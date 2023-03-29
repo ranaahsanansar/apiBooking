@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors';
 import connectDB from './config/connectdb.js'
 import userRoutes from './routes/userRoutes.js'
+import propertyRoutes from './routes/propertyRoutes.js'
 
 const app = express()
 const port = process.env.PORT 
@@ -21,6 +22,7 @@ app.use(express.json())
 
 // Load Routes
 app.use("/api/user", userRoutes)
+app.use("/api/dashboard/property"  , propertyRoutes )
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)
