@@ -24,7 +24,7 @@ class PropertyController {
       try {
         const doc = new PropertyModel({
           propertyId: id,
-            ownerId: req.user._id,
+          ownerId: req.user._id,
           title: title,
           description: description,
           price: priceCoin,
@@ -58,7 +58,32 @@ class PropertyController {
   };
 
   static getPropertyDetails = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const property = await PropertyModel.findById(id).populate({path:'ownerId',select:'-password'})
+      if (property) {
+        res.send(property);
+      } else {
+        res.send("Not Found");
+      }
+    } catch (err) {
+      res.send("DB Error"+ err);
+    }
+  };
 
+  static deleteProperty = async (req, res)=>{
+    const { id } = req.params;
+    try {
+      const property = await PropertyModel.findByIdAndDelete(id)
+      console.log(property)
+      if (property) {
+        res.send(property);
+      } else {
+        res.send("Not Found");
+      }
+    } catch (err) {
+      res.send("DB Error");
+    }
   }
 }
 
