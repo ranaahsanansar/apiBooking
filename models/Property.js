@@ -48,3 +48,14 @@ const propertySchema = new mongoose.Schema({
 const PropertyModel = mongoose.model("Property", propertySchema);
 
 export default PropertyModel;
+
+
+// id": "23" ,
+//           "title": "Apertment",
+//           "description": "Hye How are You ",
+//           "priceCoin": 20,
+//            "priceDes": "Price is nigotiable",
+//            "propertyType": "House",
+//    "locationHead": "Bahria Town",
+//    "locationDetails": "Bahria Town A Block",
+//           "city": "Lahore"
