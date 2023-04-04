@@ -1,4 +1,6 @@
 import PropertyModel from "../models/Property.js";
+import fs from "fs";
+import path  from "path";
 
 class PropertyController {
   static listNewProperty = async (req, res) => {
@@ -45,11 +47,12 @@ class PropertyController {
           photos: imagesArray,
         });
 
-        await doc.save();
+        var savedProperty = await doc.save();
 
         res.status(201).send({
           status: "success",
           message: "Property Listed for sale",
+          saved: savedProperty
         });
       } catch (err) {
         // console.log(err)
@@ -86,30 +89,35 @@ class PropertyController {
   static deleteProperty = async (req, res) => {
     const { id } = req.params;
     const userEmail = req.user.email;
-    console.log(userEmail);
+
+    // console.log(userEmail);
     try {
       const checkPropertyAuth = await PropertyModel.findById(id).populate(
         "ownerId"
       );
-      // id porperty Found then 
+      // id porperty Found then
       if (checkPropertyAuth) {
         if (checkPropertyAuth.ownerId.email === userEmail) {
           const property = await PropertyModel.findByIdAndDelete(id);
           // console.log(property);
           if (property) {
-            res.send({status: "success",
-            message: "Property Listed for sale", "property": property});
+            
+            res.send({
+              status: "success",
+              message: "Property Listed for sale",
+              property: property,
+            });
           } else {
-            res.send({status: "failed",
-            message: "Property already Deleted!",});
+            res.send({
+              status: "failed",
+              message: "Property already Deleted!",
+            });
           }
         } else {
-          res.send({status: "failed",
-          message: "You are not allowed",});
+          res.send({ status: "failed", message: "You are not allowed" });
         }
-      }else{
-        res.send({status: "failed",
-        message: "Property not found",});
+      } else {
+        res.send({ status: "failed", message: "Property not found" });
       }
       // console.log(checkPropertyAuth.ownerId.email)
     } catch (err) {

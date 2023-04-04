@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 // Property Schema
 const propertySchema = new mongoose.Schema({
   propertyId: {
-    type: String ,
+    type: String,
     default: 0,
   },
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   title: {
@@ -26,7 +26,13 @@ const propertySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  priceDes: { type: String, required: true, trim: true },
+
+  priceDes: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+
   propertyType: {
     type: String,
     required: true,
@@ -48,7 +54,6 @@ const propertySchema = new mongoose.Schema({
 const PropertyModel = mongoose.model("Property", propertySchema);
 
 export default PropertyModel;
-
 
 // id": "23" ,
 //           "title": "Apertment",
