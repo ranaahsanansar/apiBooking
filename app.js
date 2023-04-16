@@ -15,7 +15,7 @@ const DATABASE_URL = process.env.DATABASE_URL
 app.use(cors())
 
 // Database Connection
-connectDB(DATABASE_URL)
+connectDB(DATABASE_URL) 
 
 // JSON
 app.use(express.json())

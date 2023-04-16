@@ -2,8 +2,8 @@ import UserModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import transporter from "../config/emailConfig.js";
-
-class UserController {
+ 
+class UserController { 
   static userRegistration = async (req, res) => {
     const { name, email, password, password_confirmation, tc } = req.body;
     const user = await UserModel.findOne({ email: email });
@@ -21,12 +21,13 @@ class UserController {
               password: hashPassword,
               tc: tc,
             });
+            // store in MongoDb 
             await doc.save();
             const saved_user = await UserModel.findOne({ email: email });
-            // Generate JWT Token
+            // Generate JWT Token 
             const token = jwt.sign(
               { userID: saved_user._id },
-              process.env.JWT_SECRET_KEY,
+              process.env.JWT_SECRET_KEY, 
               { expiresIn: "1d" }
             );
             res.status(201).send({
@@ -125,9 +126,9 @@ class UserController {
       if (user) {
         const secret = user._id + process.env.JWT_SECRET_KEY;
         const token = jwt.sign({ userID: user._id }, secret, {
-          expiresIn: "15m",
+          expiresIn: "3m",
         });
-        const link = `http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`;
+        const link = `http://127.0.0.1:8000/api/user/reset/${user._id}/${token}`;
         console.log(link);
         // Send Email
         let info = await transporter.sendMail({
